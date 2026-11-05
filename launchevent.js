@@ -26,7 +26,7 @@ var CONFIG = {
   },
 
   // Texto do botão que volta ao email para corrigir
-  textoBotaoCorrigir: "Corrigir"
+  textoBotaoCorrigir: "Rever email"
 };
 
 /* =====================================================================

@@ -1,6 +1,6 @@
 # Verificador de Emails A Tropical — Suplemento Outlook
 
-Quando um colaborador carrega em **Enviar**, o Outlook verifica o email e, se faltar informação, mostra um aviso com o que falta. O colaborador pode **Corrigir** ou **Enviar na mesma**.
+Quando um colaborador carrega em **Enviar**, o Outlook verifica o email e, se faltar informação, mostra um aviso com o que falta. O colaborador pode **Rever email** ou **Enviar na mesma**.
 
 - **Custo: 0 €.** Não usa IA nem serviços pagos. As regras correm dentro do Outlook.
 - **Privacidade:** o conteúdo dos emails nunca sai do computador do colaborador.
