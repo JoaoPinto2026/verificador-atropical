@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Verificador de Emails A Tropical — manifest do suplemento Outlook
+  Endereço de publicação (GitHub Pages): https://joaopinto2026.github.io/verificador-atropical/
+-->
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+           xsi:type="MailApp">
+  <Id>7a05c306-2c35-431d-8c63-527da570451d</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>A Tropical</ProviderName>
+  <DefaultLocale>pt-PT</DefaultLocale>
+  <DisplayName DefaultValue="Verificador A Tropical"/>
+  <Description DefaultValue="Alerta, ao enviar, para informação em falta nos emails a clientes: nº de voo, política de cancelamento, pagamento, anexos."/>
+  <IconUrl DefaultValue="https://joaopinto2026.github.io/verificador-atropical/assets/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://joaopinto2026.github.io/verificador-atropical/assets/icon-128.png"/>
+  <SupportUrl DefaultValue="https://joaopinto2026.github.io/verificador-atropical/taskpane.html"/>
+  <AppDomains>
+    <AppDomain>https://joaopinto2026.github.io</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://joaopinto2026.github.io/verificador-atropical/taskpane.html"/>
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+  <Permissions>ReadWriteItem</Permissions>
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.12">
+          <bt:Set Name="Mailbox"/>
+        </bt:Sets>
+      </Requirements>
+      <Hosts>
+        <Host xsi:type="MailHost">
+          <Runtimes>
+            <!-- Outlook na web, novo Outlook e Mac usam a página HTML;
+                 o Outlook clássico do Windows usa diretamente o ficheiro JS -->
+            <Runtime resid="WebViewRuntime.Url">
+              <Override type="javascript" resid="JSRuntime.Url"/>
+            </Runtime>
+          </Runtimes>
+          <DesktopFormFactor>
+            <FunctionFile resid="Commands.Url"/>
+
+            <!-- Botão "Verificar email" ao escrever uma mensagem -->
+            <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="atropicalGroup">
+                  <Label resid="GroupLabel"/>
+                  <Control xsi:type="Button" id="atropicalVerificar">
+                    <Label resid="BotaoLabel"/>
+                    <Supertip>
+                      <Title resid="BotaoLabel"/>
+                      <Description resid="BotaoDescricao"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16x16"/>
+                      <bt:Image size="32" resid="Icon.32x32"/>
+                      <bt:Image size="80" resid="Icon.80x80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>verificarAgora</FunctionName>
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+
+            <!-- Verificação automática ao carregar em Enviar (Smart Alerts) -->
+            <ExtensionPoint xsi:type="LaunchEvent">
+              <LaunchEvents>
+                <LaunchEvent Type="OnMessageSend" FunctionName="onMessageSendHandler" SendMode="PromptUser"/>
+              </LaunchEvents>
+              <SourceLocation resid="WebViewRuntime.Url"/>
+            </ExtensionPoint>
+          </DesktopFormFactor>
+        </Host>
+      </Hosts>
+      <Resources>
+        <bt:Images>
+          <bt:Image id="Icon.16x16" DefaultValue="https://joaopinto2026.github.io/verificador-atropical/assets/icon-16.png"/>
+          <bt:Image id="Icon.32x32" DefaultValue="https://joaopinto2026.github.io/verificador-atropical/assets/icon-32.png"/>
+          <bt:Image id="Icon.80x80" DefaultValue="https://joaopinto2026.github.io/verificador-atropical/assets/icon-80.png"/>
+        </bt:Images>
+        <bt:Urls>
+          <bt:Url id="Commands.Url" DefaultValue="https://joaopinto2026.github.io/verificador-atropical/commands.html"/>
+          <bt:Url id="WebViewRuntime.Url" DefaultValue="https://joaopinto2026.github.io/verificador-atropical/commands.html"/>
+          <bt:Url id="JSRuntime.Url" DefaultValue="https://joaopinto2026.github.io/verificador-atropical/launchevent.js"/>
+        </bt:Urls>
+        <bt:ShortStrings>
+          <bt:String id="GroupLabel" DefaultValue="A Tropical"/>
+          <bt:String id="BotaoLabel" DefaultValue="Verificar email"/>
+        </bt:ShortStrings>
+        <bt:LongStrings>
+          <bt:String id="BotaoDescricao" DefaultValue="Verifica se falta informação no email (nº de voo, cancelamento, pagamento, anexos) antes de enviar."/>
+        </bt:LongStrings>
+      </Resources>
+    </VersionOverrides>
+  </VersionOverrides>
+</OfficeApp>
